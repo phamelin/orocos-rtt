@@ -40,16 +40,12 @@
 #error "Your build is including a header which includes assembler instructions, though OROBLD_OS_NO_ASM was defined."
 #endif
 #ifdef OROBLD_OS_AGNOSTIC
-# if defined( OROBLD_OS_ARCH_i386 )
-#	if defined(_MSC_VER)
-#	 include "oro_msvc/oro_system.h"
-#	else
-#    include "oro_i386/oro_system.h"
-#   endif
-# elif defined( OROBLD_OS_ARCH_x86_64 )
-#  include "oro_x86_64/oro_system.h"
-# elif defined( OROBLD_OS_ARCH_ppc )
-#  include "oro_powerpc/oro_system.h"
+# if defined(_MSC_VER)
+#  include "oro_msvc/oro_system.h"
+# elif defined(__GNUC__)
+#  include "oro_gcc/oro_system.h"
+# else
+#  error "Unsupported architecture or compiler"
 # endif
 #else
 #define new _new
