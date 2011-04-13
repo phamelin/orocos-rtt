@@ -37,20 +37,17 @@
  
  
 #include "../rtt-config.h"
+
 #if defined(OROBLD_OS_AGNOSTIC) || defined(OROBLD_OS_NO_ASM)
 # if defined(OROBLD_OS_NO_ASM)
 #  include "oro_noasm/oro_atomic.h"
 # else
-#  if defined( OROBLD_OS_ARCH_i386 )
-#	if defined(_MSC_VER)
-#	 include "oro_msvc/oro_atomic.h"
-#	else
-#    include "oro_i386/oro_atomic.h"
-#   endif
-#  elif defined( OROBLD_OS_ARCH_x86_64 )
-#   include "oro_x86_64/oro_atomic.h"
-#  elif defined( OROBLD_OS_ARCH_ppc )
-#   include "oro_powerpc/oro_atomic.h"
+#  if defined(_MSC_VER)
+#   include "oro_msvc/oro_atomic.h"
+#  elif defined(__GNUC__)
+#   include "oro_gcc/oro_atomic.h"
+#  else
+#   error "Unsupported architecture or compiler"
 #  endif
 # endif
 #else
